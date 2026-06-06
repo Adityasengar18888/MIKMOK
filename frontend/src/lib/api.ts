@@ -1,4 +1,4 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "https://mikmok.onrender.com/api";
 
 let authToken: string | null = null;
 
@@ -71,7 +71,6 @@ export const usersApi = {
 export const videosApi = {
   upload: (formData: FormData) =>
     api.post("/videos/upload", formData, {
-      headers: { "Content-Type": "multipart/form-data" },
       timeout: 120000, // 2 min timeout for uploads
     }),
   getFeed: (type: string = "latest", cursor?: string, limit?: number) =>
