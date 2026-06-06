@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useAuth } from "@clerk/nextjs";
+import { useAuth } from "@clerk/clerk-react";
 import { useRouter } from "next/navigation";
 import { notificationsApi } from "@/lib/api";
 import { useApiToken } from "@/hooks/useAuthSync";

@@ -1,4 +1,4 @@
-import { SignUp } from "@clerk/nextjs";
+import { SignUp } from "@clerk/clerk-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
