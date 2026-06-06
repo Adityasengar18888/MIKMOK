@@ -1,6 +1,10 @@
-"use client";
+import { SignUp } from "@clerk/nextjs";
+import type { Metadata } from "next";
 
-import { SignUp } from "@clerk/clerk-react";
+export const metadata: Metadata = {
+  title: "Sign Up – MikMok",
+  description: "Create your MikMok account and join the community.",
+};
 
 export default function SignUpPage() {
   return (

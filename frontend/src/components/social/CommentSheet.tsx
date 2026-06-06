@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { useAuth } from "@clerk/clerk-react";
+import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { MessageCircle, X, Send, ChevronDown } from "lucide-react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";

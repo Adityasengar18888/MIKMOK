@@ -2,7 +2,7 @@
 
 import { useState, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@clerk/clerk-react";
+import { useAuth } from "@clerk/nextjs";
 import { Upload, X, Hash, Loader2, Film, CheckCircle } from "lucide-react";
 import { videosApi } from "@/lib/api";
 import { useApiToken } from "@/hooks/useAuthSync";

@@ -28,28 +28,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkClientProvider
-      publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || "pk_test_missing_key_please_add_to_vercel"}
-      appearance={{
-        variables: {
-          colorPrimary: "#06b6d4",
-          colorBackground: "#f8fafc",
-          colorText: "#0f172a",
-          colorInputBackground: "#f1f5f9",
-          colorInputText: "#0f172a",
-          borderRadius: "1rem",
-        },
-      }}
+    <html
+      lang="en"
+      className={`${inter.variable} font-sans h-full antialiased`}
+      suppressHydrationWarning
     >
-      <html
-        lang="en"
-        className={`${inter.variable} font-sans h-full antialiased`}
-        suppressHydrationWarning
-      >
-        <body className="min-h-full flex flex-col bg-background text-foreground">
+      <body className="min-h-full flex flex-col bg-background text-foreground">
+        <ClerkClientProvider
+          appearance={{
+            variables: {
+              colorPrimary: "#06b6d4",
+              colorBackground: "#f8fafc",
+              colorText: "#0f172a",
+              colorInputBackground: "#f1f5f9",
+              colorInputText: "#0f172a",
+              borderRadius: "1rem",
+            },
+          }}
+        >
           <QueryProvider>{children}</QueryProvider>
-        </body>
-      </html>
-    </ClerkClientProvider>
+        </ClerkClientProvider>
+      </body>
+    </html>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { useAuth } from "@clerk/clerk-react";
+import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { Heart } from "lucide-react";
 import { likesApi } from "@/lib/api";

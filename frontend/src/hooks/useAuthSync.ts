@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useCallback } from "react";
-import { useAuth, useUser } from "@clerk/clerk-react";
+import { useAuth, useUser } from "@clerk/nextjs";
 import { setAuthToken, authApi } from "@/lib/api";
 import { useUserStore } from "@/stores/userStore";
 

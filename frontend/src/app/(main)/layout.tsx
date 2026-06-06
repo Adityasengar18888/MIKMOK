@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useUser, UserButton } from "@clerk/clerk-react";
+import { useUser, UserButton } from "@clerk/nextjs";
 import {
   Home,
   Search,
