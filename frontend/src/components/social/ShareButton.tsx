@@ -13,7 +13,8 @@ export default function ShareButton({ videoId }: ShareButtonProps) {
 
   const handleShare = useCallback(async () => {
     if (typeof window === "undefined") return;
-    const url = `${window.location.origin}/feed?v=${videoId}`;
+    const origin = typeof window !== "undefined" ? window.location.origin : "";
+    const url = `${origin}/feed?v=${videoId}`;
 
     if (navigator.share) {
       try {
