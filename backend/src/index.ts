@@ -22,8 +22,22 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  "http://localhost:3000",
+  "https://mikmok-nu.vercel.app",
+].filter(Boolean);
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || "http://localhost:3000",
+  origin: (origin, callback) => {
+    // Allow requests with no origin (mobile apps, curl, etc.)
+    if (!origin) return callback(null, true);
+    // Allow any Vercel preview URL for this project
+    if (origin.includes("vercel.app") || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    callback(null, true); // Allow all for now during development
+  },
   credentials: true,
 }));
 app.use(express.json());
