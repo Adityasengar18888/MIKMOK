@@ -2,6 +2,10 @@
 
 import { ClerkProvider } from "@clerk/nextjs";
 
+const PUBLISHABLE_KEY =
+  process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY ||
+  "pk_test_c21vb3RoLWJlYWdsZS03Ny5jbGVyay5hY2NvdW50cy5kZXYk";
+
 export default function ClerkClientProvider({
   children,
   appearance,
@@ -10,7 +14,7 @@ export default function ClerkClientProvider({
   appearance?: any;
 }) {
   return (
-    <ClerkProvider appearance={appearance}>
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY} appearance={appearance}>
       {children}
     </ClerkProvider>
   );
