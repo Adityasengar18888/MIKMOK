@@ -29,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkClientProvider
-      publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY!}
+      publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || "pk_test_missing_key_please_add_to_vercel"}
       appearance={{
         variables: {
           colorPrimary: "#06b6d4",
