@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { ClerkProvider } from "@clerk/clerk-react";
+import ClerkClientProvider from "@/components/providers/ClerkClientProvider";
 import { QueryProvider } from "@/components/providers/QueryProvider";
 import "./globals.css";
 
@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider
+    <ClerkClientProvider
       publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY!}
       appearance={{
         variables: {
@@ -50,6 +50,6 @@ export default function RootLayout({
           <QueryProvider>{children}</QueryProvider>
         </body>
       </html>
-    </ClerkProvider>
+    </ClerkClientProvider>
   );
 }

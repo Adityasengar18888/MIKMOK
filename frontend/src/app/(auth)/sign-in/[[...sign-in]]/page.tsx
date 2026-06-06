@@ -1,10 +1,6 @@
-import { SignIn } from "@clerk/clerk-react";
-import type { Metadata } from "next";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Sign In – MikMok",
-  description: "Sign in to your MikMok account and start creating.",
-};
+import { SignIn } from "@clerk/clerk-react";
 
 export default function SignInPage() {
   return (
