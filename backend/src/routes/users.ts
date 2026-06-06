@@ -10,7 +10,7 @@ const router = Router();
  */
 router.get("/:username", optionalAuth, async (req: Request, res: Response): Promise<void> => {
   try {
-    const { username } = req.params;
+    const username = String(req.params.username);
 
     const user = await prisma.user.findUnique({
       where: { username },
@@ -103,7 +103,7 @@ router.patch("/profile", requireAuth, async (req: Request, res: Response): Promi
  */
 router.get("/:username/videos", optionalAuth, async (req: Request, res: Response): Promise<void> => {
   try {
-    const { username } = req.params;
+    const username = String(req.params.username);
     const { cursor, limit = "12" } = req.query;
     const take = Math.min(parseInt(limit as string), 50);
 

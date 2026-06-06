@@ -1,4 +1,5 @@
 import prisma from "../lib/prisma";
+import { Prisma } from "@prisma/client";
 
 type NotificationType = "follow" | "like" | "comment";
 
@@ -22,7 +23,7 @@ export async function createNotification(params: CreateNotificationParams) {
         userId,
         type,
         message,
-        metadata: metadata || undefined,
+        metadata: metadata ? (metadata as Prisma.InputJsonValue) : undefined,
       },
     });
   } catch (error) {

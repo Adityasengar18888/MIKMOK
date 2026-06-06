@@ -241,7 +241,7 @@ router.get("/", optionalAuth, async (req: Request, res: Response): Promise<void>
 router.get("/:id", optionalAuth, async (req: Request, res: Response): Promise<void> => {
   try {
     const video = await prisma.video.findUnique({
-      where: { id: req.params.id },
+      where: { id: String(req.params.id) },
       include: {
         user: { select: { id: true, username: true, name: true, avatar: true } },
         _count: { select: { likes: true, comments: true } },
@@ -275,7 +275,7 @@ router.get("/:id", optionalAuth, async (req: Request, res: Response): Promise<vo
 router.patch("/:id/view", async (req: Request, res: Response): Promise<void> => {
   try {
     await prisma.video.update({
-      where: { id: req.params.id },
+      where: { id: String(req.params.id) },
       data: { views: { increment: 1 } },
     });
     res.json({ success: true });
@@ -291,7 +291,7 @@ router.patch("/:id/view", async (req: Request, res: Response): Promise<void> => 
 router.delete("/:id", requireAuth, async (req: Request, res: Response): Promise<void> => {
   try {
     const video = await prisma.video.findUnique({
-      where: { id: req.params.id },
+      where: { id: String(req.params.id) },
     });
 
     if (!video) {
@@ -312,7 +312,7 @@ router.delete("/:id", requireAuth, async (req: Request, res: Response): Promise<
       console.warn("Failed to delete video from Cloudinary");
     }
 
-    await prisma.video.delete({ where: { id: req.params.id } });
+    await prisma.video.delete({ where: { id: String(req.params.id) } });
     res.json({ success: true });
   } catch (error) {
     console.error("Delete video error:", error);

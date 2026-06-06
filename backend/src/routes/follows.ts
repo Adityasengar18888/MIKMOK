@@ -72,7 +72,7 @@ router.post("/", requireAuth, async (req: Request, res: Response): Promise<void>
       where: { followingId },
     });
 
-    res.status(201).json({ following: true, followerCount });
+    res.status(201).json({ followingId: true, followerCount });
   } catch (error) {
     console.error("Follow error:", error);
     res.status(500).json({ error: "Failed to follow user" });
@@ -110,7 +110,7 @@ router.delete("/", requireAuth, async (req: Request, res: Response): Promise<voi
       where: { followingId },
     });
 
-    res.json({ following: false, followerCount });
+    res.json({ followingId: false, followerCount });
   } catch (error) {
     console.error("Unfollow error:", error);
     res.status(500).json({ error: "Failed to unfollow user" });
@@ -123,7 +123,7 @@ router.delete("/", requireAuth, async (req: Request, res: Response): Promise<voi
  */
 router.get("/:userId/followers", async (req: Request, res: Response): Promise<void> => {
   try {
-    const { userId } = req.params;
+    const userId = String(req.params.userId);
     const { cursor, limit = "20" } = req.query;
     const take = Math.min(parseInt(limit as string), 50);
 
@@ -159,7 +159,7 @@ router.get("/:userId/followers", async (req: Request, res: Response): Promise<vo
  */
 router.get("/:userId/following", async (req: Request, res: Response): Promise<void> => {
   try {
-    const { userId } = req.params;
+    const userId = String(req.params.userId);
     const { cursor, limit = "20" } = req.query;
     const take = Math.min(parseInt(limit as string), 50);
 

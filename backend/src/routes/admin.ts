@@ -139,7 +139,7 @@ router.get("/users", async (req: Request, res: Response): Promise<void> => {
 router.patch("/users/:id/ban", async (req: Request, res: Response): Promise<void> => {
   try {
     const user = await prisma.user.update({
-      where: { id: req.params.id },
+      where: { id: String(req.params.id) },
       data: { banned: true },
     });
     res.json({ user, message: "User banned successfully" });
@@ -156,7 +156,7 @@ router.patch("/users/:id/ban", async (req: Request, res: Response): Promise<void
 router.patch("/users/:id/restore", async (req: Request, res: Response): Promise<void> => {
   try {
     const user = await prisma.user.update({
-      where: { id: req.params.id },
+      where: { id: String(req.params.id) },
       data: { banned: false },
     });
     res.json({ user, message: "User restored successfully" });
@@ -216,7 +216,7 @@ router.get("/videos", async (req: Request, res: Response): Promise<void> => {
  */
 router.delete("/videos/:id", async (req: Request, res: Response): Promise<void> => {
   try {
-    await prisma.video.delete({ where: { id: req.params.id } });
+    await prisma.video.delete({ where: { id: String(req.params.id) } });
     res.json({ success: true, message: "Video deleted" });
   } catch (error) {
     console.error("Admin delete video error:", error);

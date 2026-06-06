@@ -11,7 +11,7 @@ const router = Router();
  */
 router.get("/videos/:videoId/comments", optionalAuth, async (req: Request, res: Response): Promise<void> => {
   try {
-    const { videoId } = req.params;
+    const videoId = String(req.params.videoId);
     const { cursor, limit = "20" } = req.query;
     const take = Math.min(parseInt(limit as string), 50);
 
@@ -51,7 +51,7 @@ router.get("/videos/:videoId/comments", optionalAuth, async (req: Request, res: 
  */
 router.get("/:commentId/replies", optionalAuth, async (req: Request, res: Response): Promise<void> => {
   try {
-    const { commentId } = req.params;
+    const commentId = String(req.params.commentId);
 
     const replies = await prisma.comment.findMany({
       where: { parentId: commentId },
@@ -147,7 +147,7 @@ router.post("/", requireAuth, async (req: Request, res: Response): Promise<void>
 router.delete("/:id", requireAuth, async (req: Request, res: Response): Promise<void> => {
   try {
     const comment = await prisma.comment.findUnique({
-      where: { id: req.params.id },
+      where: { id: String(req.params.id) },
     });
 
     if (!comment) {
@@ -160,7 +160,7 @@ router.delete("/:id", requireAuth, async (req: Request, res: Response): Promise<
       return;
     }
 
-    await prisma.comment.delete({ where: { id: req.params.id } });
+    await prisma.comment.delete({ where: { id: String(req.params.id) } });
     res.json({ success: true });
   } catch (error) {
     console.error("Delete comment error:", error);
