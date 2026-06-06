@@ -1,24 +1,54 @@
-import axios from "axios";
-
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
 
-const api = axios.create({
-  baseURL: API_BASE,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+let authToken: string | null = null;
+
+async function fetcher(endpoint: string, options: any = {}) {
+  const headers = new Headers(options.headers);
+  if (!headers.has("Content-Type") && !(options.body instanceof FormData)) {
+    headers.set("Content-Type", "application/json");
+  }
+  if (authToken) {
+    headers.set("Authorization", `Bearer ${authToken}`);
+  }
+
+  let url = API_BASE + endpoint;
+  if (options.params) {
+    const searchParams = new URLSearchParams();
+    Object.entries(options.params).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        searchParams.append(key, String(value));
+      }
+    });
+    const qs = searchParams.toString();
+    if (qs) url += `?${qs}`;
+  }
+
+  const res = await fetch(url, { ...options, headers });
+  
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    const error: any = new Error(errorData.error || `HTTP ${res.status}`);
+    error.response = { status: res.status, data: errorData };
+    throw error;
+  }
+  
+  const data = await res.json().catch(() => null);
+  return { data };
+}
+
+const api = {
+  get: (endpoint: string, options?: any) => fetcher(endpoint, { method: "GET", params: options?.params, ...options }),
+  post: (endpoint: string, data?: any, options?: any) => fetcher(endpoint, { method: "POST", body: data instanceof FormData ? data : JSON.stringify(data), ...options }),
+  patch: (endpoint: string, data?: any, options?: any) => fetcher(endpoint, { method: "PATCH", body: data instanceof FormData ? data : JSON.stringify(data), ...options }),
+  delete: (endpoint: string, options?: any) => fetcher(endpoint, { method: "DELETE", body: options?.data ? JSON.stringify(options.data) : undefined, ...options }),
+};
 
 /**
  * Set the auth token for API requests.
  * Called from the frontend after Clerk provides a session token.
  */
 export function setAuthToken(token: string | null) {
-  if (token) {
-    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-  } else {
-    delete api.defaults.headers.common["Authorization"];
-  }
+  authToken = token;
 }
 
 // ============ Auth ============
